@@ -1,0 +1,6 @@
+.venv/
+__pycache__/
+*.pyc
+lab1_uml.png
+lab2_uml.png
+uml/
