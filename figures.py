@@ -107,8 +107,59 @@ class Triangle(Figure):
         )
 
 
+def _evaluate_condition(condition, context):
+    """
+    Разбирает и вычисляет простое условие вида 'поле оператор значение'.
+
+    Поддерживаемые операторы: ==, !=, >=, <=, >, <
+    Поддерживаемые поля: area, perimeter, color, date, type, r, width, height
+    Значение может быть числом или строкой в кавычках (одинарных или двойных).
+    """
+    # Поддерживаемые операторы (порядок важен: >= и <= проверяем раньше > и <)
+    operators = [">=", "<=", "!=", "==", ">", "<"]
+
+    op_found = None
+    for op in operators:
+        if op in condition:
+            op_found = op
+            break
+
+    if op_found is None:
+        raise ValueError(f"Неизвестный оператор в условии: '{condition}'")
+
+    left_str, right_str = condition.split(op_found, 1)
+    field = left_str.strip()
+    value_str = right_str.strip()
+
+    if field not in context:
+        raise KeyError(f"Неизвестное поле: '{field}'")
+
+    left_val = context[field]
+
+    # Определяем тип значения: строка (в кавычках) или число
+    if (value_str.startswith("'") and value_str.endswith("'")) or \
+       (value_str.startswith('"') and value_str.endswith('"')):
+        right_val = value_str[1:-1]
+    else:
+        right_val = float(value_str)
+
+    if op_found == "==":
+        return left_val == right_val
+    if op_found == "!=":
+        return left_val != right_val
+    if op_found == ">=":
+        return left_val >= right_val
+    if op_found == "<=":
+        return left_val <= right_val
+    if op_found == ">":
+        return left_val > right_val
+    # op_found == "<"
+    return left_val < right_val
+
+
 class Container:
     """Контейнер для хранения фигур."""
+
 
     def __init__(self):
         self.items = []
@@ -151,15 +202,16 @@ class Container:
             }
             try:
                 # Если условие истинно — фигура удаляется
-                if eval(condition, {}, context):
+                if _evaluate_condition(condition, context):
                     removed.append(fig)
                 else:
                     remaining.append(fig)
-            except Exception:
-                # Если в условии опечатка или свойство отсутствует — фигуру не удаляем
+            except (ValueError, KeyError, TypeError):
+                # Если условие некорректно или свойство отсутствует — фигуру не удаляем
                 remaining.append(fig)
 
         self.items = remaining
         print(f"Команда REM [{condition}]: удалено {len(removed)} объект(ов).")
         for r in removed:
             print(f"  -> Удален: {r}")
+
