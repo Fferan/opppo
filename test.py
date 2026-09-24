@@ -1,3 +1,5 @@
+"""Тесты для проверки классов геометрических фигур и контейнера."""
+
 import math
 import sys
 from figures import Circle, Container, Rectangle, Triangle

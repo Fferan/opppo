@@ -1,3 +1,5 @@
+"""Модуль обработки команд из файла для управления геометрическими фигурами."""
+
 import sys
 from figures import Circle, Container, Rectangle, Triangle
 
