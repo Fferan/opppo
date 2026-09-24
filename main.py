@@ -3,7 +3,7 @@
 import sys
 from figures import Circle, Container, Rectangle, Triangle
 
-if sys.platform == "win32": # для русского языка
+if sys.platform == "win32":  # для русского языка
     sys.stdout.reconfigure(encoding="utf-8")
 
 
