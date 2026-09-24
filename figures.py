@@ -128,7 +128,7 @@ def _evaluate_condition(condition, context):
 
     Поддерживаемые операторы: ==, !=, >=, <=, >, <
     Поддерживаемые поля: area, perimeter, color, date, type, r, width, height
-    Значение может быть числом или строкой в кавычках (одинарных или двойных).
+    Значение: число или строка в кавычках (одинарных или двойных).
     """
     # Поддерживаемые операторы (порядок важен: >= и <= проверяем раньше > и <)
     operators = [">=", "<=", "!=", "==", ">", "<"]
@@ -174,7 +174,6 @@ def _evaluate_condition(condition, context):
 
 class Container:
     """Контейнер для хранения фигур."""
-
 
     def __init__(self):
         self.items = []
@@ -229,4 +228,3 @@ class Container:
         print(f"Команда REM [{condition}]: удалено {len(removed)} объект(ов).")
         for r in removed:
             print(f"  -> Удален: {r}")
-
