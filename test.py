@@ -4,7 +4,7 @@ import math
 import sys
 from figures import Circle, Container, Rectangle, Triangle
 
-if sys.platform == "win32":
+if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8")
 
 
