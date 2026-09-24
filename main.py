@@ -88,7 +88,7 @@ def process_file(filename):
 
 
 def main():
-    # Если передан аргумент командной строки — читаем его, иначе input.txt
+    """Точка входа: определяет файл команд и запускает обработку."""
     filename = sys.argv[1] if len(sys.argv) > 1 else "input.txt"
     process_file(filename)
 
