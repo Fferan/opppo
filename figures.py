@@ -59,6 +59,8 @@ class Rectangle(Figure):
         self.y2 = float(y2)
         self.width = abs(self.x2 - self.x1)
         self.height = abs(self.y1 - self.y2)
+        if self.width == 0 or self.height == 0:
+            raise ValueError("Стороны прямоугольника должны быть положительными")
 
     def area(self):
         return self.width * self.height
@@ -91,6 +93,15 @@ class Triangle(Figure):
         self.side_a = math.hypot(self.x2 - self.x1, self.y2 - self.y1)
         self.side_b = math.hypot(self.x3 - self.x2, self.y3 - self.y2)
         self.side_c = math.hypot(self.x1 - self.x3, self.y1 - self.y3)
+
+        # Проверяем, что точки не лежат на одной прямой (площадь > 0)
+        _area = 0.5 * abs(
+            self.x1 * (self.y2 - self.y3)
+            + self.x2 * (self.y3 - self.y1)
+            + self.x3 * (self.y1 - self.y2)
+        )
+        if _area == 0:
+            raise ValueError("Точки треугольника лежат на одной прямой, фигура не образуется")
 
     def area(self):
         # Площадь треугольника по координатам вершин (формула Гаусса)
